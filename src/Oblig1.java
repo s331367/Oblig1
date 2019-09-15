@@ -32,22 +32,32 @@ public class Oblig1 {
         return ut; //Skriver ut resultatet
     }
 
-    public static void  indekssortering( int [] a){
-        int[] indeksStigende = {};
+
+    public static int [] indekssortering ( int [] a){
+        int[] aStigende = a.clone();
+        int[] indeksStigende = new int [a.length];
         int tmp;
 
-        for(int i=0; i<a.length; i++){
-            for(int j=0; j<a.length-1; j++){
-                    if (a[j + 1] < a[j]) {
-                        tmp = a[j + 1];
-                        a[j + 1] = a[j];
-                        a[j] = tmp;
+        for(int i=0; i<aStigende.length; i++){
+            for(int j=0; j<aStigende.length-1; j++){
+                    if (aStigende[j + 1] < aStigende[j]) {
+                        tmp = aStigende[j + 1];
+                        aStigende[j + 1] = aStigende[j];
+                        aStigende[j] = tmp;
                     }
             }
-
         }
 
-        for(int k : a) System.out.print(k + " ");
+        for(int i=0; i<a.length; i++){
+            for(int j=0; j<a.length; j++){
+                if(a[j] == aStigende[i]){
+                    indeksStigende[i] = j;
+                }
+            }
+        }
+
+
+        return indeksStigende;
     }
 
     public static void main(String[] args){
@@ -57,7 +67,7 @@ public class Oblig1 {
         System. out .println(a + " " + b + " " + c);*/
 
         int [] a = {6,10,16,11,7,12,3,9,8,5};
-        indekssortering(a);
+        System.out.print(Arrays.toString(indekssortering(a)));
 
         // Utskrift: [6, 10, 16, 11, 7, 12, 3, 9, 8, 5] a er ikke endret
         // Utskrift: [6, 9, 0, 4, 8, 7, 1, 3, 5, 2]
