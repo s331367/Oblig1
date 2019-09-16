@@ -2,6 +2,28 @@ import java.util.Arrays;
 
 public class Oblig1 {
 
+    //Oppgave 2
+    public static int antallUlikeSortert(int[] a){
+        if(a.length < 0){ //Sjekker om arrayen er tom
+            return 0;
+        }
+        if(!gyldigArray(a)) throw new IllegalStateException("Ikke sortert array");
+        int temp = 0;//hjelpevariabel for å sammenligne med a[i], og om de er ulike eller ikke
+        int antall = 0;//hjelpevarbel som teller antall ulike verdier
+        for(int i = 0; i<a.length; i++){
+            if(a[i]!=temp){//hvis verdiene ikke er like
+                antall++;//pluss 1 på antall forskjellige verdier
+            }
+            temp=a[i];
+        }
+        return antall;//returner antall forskjellige verdier til slutt
+    }
+    public static boolean gyldigArray(int[] a){//Sjekker om arrayen er sortert
+        for(int i = 0; i<a.length; i++){
+            if(a[i-1]>a[i]) return false;
+        }
+        return true;
+    }
     //Oppgave 4
     public static void delsortering ( int[] a) {
         int j=0;
