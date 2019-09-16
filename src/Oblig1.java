@@ -1,8 +1,48 @@
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Random;
 
 public class Oblig1 {
+
+    //Oppgave 2
+    public static int antallUlikeSortert(int[] a){
+        if(a.length < 0){ //Sjekker om arrayen er tom
+            return 0;
+        }
+        if(!gyldigArray(a)) throw new IllegalStateException("Ikke sortert array");
+        int temp = 0;//hjelpevariabel for å sammenligne med a[i], og om de er ulike eller ikke
+        int antall = 0;//hjelpevarbel som teller antall ulike verdier
+        for(int i = 0; i<a.length; i++){
+            if(a[i]!=temp){//hvis verdiene ikke er like
+                antall++;//pluss 1 på antall forskjellige verdier
+            }
+            temp=a[i];
+        }
+        return antall;//returner antall forskjellige verdier til slutt
+    }
+    public static boolean gyldigArray(int[] a){//Sjekker om arrayen er sortert
+        for(int i = 0; i<a.length; i++){
+            if(a[i-1]>a[i]) return false;
+        }
+        return true;
+    }
+
+    //Oppgave 3
+    public static int antallUlikeSortertV2(int[] a){
+        if(a.length < 0){
+            return 0;
+        }
+        int antall = 0;
+        for(int i = 0; i<a.length; i++){//første verdien
+            for(int j = i+1; j<a.length; j++){
+                if(a[i]==a[j]){//sammenligner de resterende verdiene
+                    //med første verdien, om det finnes duplikater
+                    antall++;//hvis ja, legges det til inn på antall
+                }
+            }
+        }
+        return (a.length+1)-antall;//Trekker duplikater fra antall verdier
+    }
 
     //Oppgave 4
     public static void delsortering ( int[] a) {
@@ -139,85 +179,49 @@ public class Oblig1 {
 
     //Oppgave 9
     public static int[] tredjeMin ( int [] a){
-
         int n = a.length;     // tabellens lengde
         if (n < 3) throw      // må ha minst tre verdier
-                new java.util.NoSuchElementException("a.length(" + n + ") < 3!");
+                new java.util.NoSuchElementException("a.length(" + n + ") < 2!");
 
-
-        //En array som får tre første verdiene
+        //Tabell som tar inn tre første verdiene fra tabell a ved hjelp av en for-løkke
         int[] treForsteVerdier = new int[3];
+        for (int i=0; i<3; i++){
+            treForsteVerdier[i] = a[i];
+        }
 
-
-        int[] indeksStigende = indekssortering(a);
-
-        int m = indeksStigende[0];      // m er posisjonen til minste verdi
-        int nm = indeksStigende[1];     // nm er posisjonen til nest minste verdi
-        int nnm = indeksStigende[3];    // nnm er posisjonen til nest nest minste verdi
+        int m = 0;      // m er posisjonen til minste verdi
+        int nm = 1;     // nm er posisjonen til nest minste verdi
+        int nnm = 2;    // nnm er posisjonen til nest nest minste verdi
 
         // bytter om m og nm hvis a[1] er større enn a[0]
-        if(a[2] < a[1]) { nnm = 1; nm = 2; }
-        if(a[1] < a[0]) { nm =0; m=1; }
+        if (a[2] < a[1]) { nnm = 1; nm = 0; }
+
 
         int minstverdi = a[m];                // minste verdi
         int nestminstverdi = a[nm];           // nest minste verdi
         int nestnestminstverdi = a[nnm];      // nest nest minste verdi
 
-        for (int i = 3; i < n; i++){
+        for (int i = 3; i < n; i++)
+        {
+            if (a[i] > nestminstverdi)
+            {
+                if (a[i] > minstverdi)
+                {
+                    nm = m;
+                    nestminstverdi = minstverdi;     // ny nest størst
 
-            if (a[i] < nestnestminstverdi){
-                nnm = nm;
-                nestnestminstverdi = nestminstverdi;
-                m=i;
-
-                nestminstverdi = a[nm];
-
-                if(a[i] < nestminstverdi){
-
-                    if (a[i] > minstverdi){
-                        nm = m;
-                        nestminstverdi = minstverdi;     // ny nest størst
-
-                        m = i;
-                        minstverdi = a[m];              // ny størst
-                    } else {
-                        nm = i;
-                        nestminstverdi = a[nm];         // ny nest størst
-                    }
+                    m = i;
+                    minstverdi = a[m];              // ny størst
+                }
+                else
+                {
+                    nm = i;
+                    nestminstverdi = a[nm];         // ny nest størst
                 }
             }
         } // for
 
-        return new int[] {m,nm, nnm};    // n i posisjon 0, nm i posisjon 1
-    }
-
-
-
-    //Oppgave 10
-    public static boolean inneholdt (String a, String b) {
-        String[] aSplit = a.split("");
-        String[] bSplit = b.split("");
-
-        //Finner arrayen som har størst lengde av sSplit og tSplit
-        int lengde=0;
-        if(bSplit.length>aSplit.length){
-            lengde = bSplit.length;
-        } else {
-            lengde = aSplit.length;
-        }
-
-
-        List<String> antallLik = new ArrayList<String>();
-        for(int i=0; i<lengde; i++){
-            int antall=1;
-            for (int j=1; j<lengde; j++) {
-                if (aSplit[i] == aSplit[j]) {
-                    antall++;
-
-                }
-            }
-        }
-
+        return new int[] {m,nm};    // n i posisjon 0, nm i posisjon 1
     }
 
 
@@ -229,7 +233,7 @@ public class Oblig1 {
         System. out .println(a + " " + b + " " + c);*/
 
         int [] a = {16,6,12,11,7,12,3,9,8,5};
-        System.out.print(Arrays.toString(tredjeMin(a)));
+        tredjeMin(a);
 
 
         //int [] indeks = indekssortering (a);
