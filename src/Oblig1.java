@@ -1,4 +1,6 @@
 import java.util.Arrays;
+import java.util.NoSuchElementException;
+import java.util.Random;
 
 public class Oblig1 {
 
@@ -24,6 +26,24 @@ public class Oblig1 {
         }
         return true;
     }
+
+    //Oppgave 3
+    public static int antallUlikeSortertV2(int[] a){
+        if(a.length < 0){
+            return 0;
+        }
+        int antall = 0;
+        for(int i = 0; i<a.length; i++){//første verdien
+            for(int j = i+1; j<a.length; j++){
+                if(a[i]==a[j]){//sammenligner de resterende verdiene
+                    //med første verdien, om det finnes duplikater
+                    antall++;//hvis ja, legges det til inn på antall
+                }
+            }
+        }
+        return (a.length+1)-antall;//Trekker duplikater fra antall verdier
+    }
+
     //Oppgave 4
     public static void delsortering ( int[] a) {
         int j=0;
