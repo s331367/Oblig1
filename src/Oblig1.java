@@ -213,7 +213,7 @@ public class Oblig1 {
             for (int j=1; j<lengde; j++) {
                 if (aSplit[i] == aSplit[j]) {
                     antall++;
-                    
+
                 }
             }
         }
