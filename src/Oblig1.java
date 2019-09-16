@@ -2,6 +2,55 @@ import java.util.Arrays;
 
 public class Oblig1 {
 
+    //Oppgave 4
+    public static void delsortering ( int[] a) {
+        int j=0;
+        for(int i=0; i<a.length; i++) {
+            int tmp = a[j];
+            if(a[i] % 2 == 0){
+
+            } else {
+                a[j] = a[i];
+                a[i] = tmp;
+                j++;
+
+            }
+        }
+
+        int storstOdd = a[0];
+        for(int i=0; i<j-1; i++) {
+            for(int k=1; k<j; k++) {
+                if (a[i] > a[k]) {
+                    storstOdd = a[i];
+                    a[i] = a[k];
+                    a[k] = storstOdd;
+                } else {
+                    storstOdd = a[k];
+                }
+                i++;
+            }
+        }
+
+        int storstPartall = a[j];
+        for(int i=j; i<a.length-1; i++) {
+            for(int k=j+1; k<a.length; k++) {
+                if (a[i] > a[k]) {
+                    storstPartall = a[i];
+                    a[i] = a[k];
+                    a[k] = storstPartall;
+                } else {
+                    storstPartall = a[k];
+                }
+                i++;
+            }
+        }
+        System.out.println(j);
+
+        for(int k : a) {
+            System.out.print(k +" ");
+        }
+    }
+
     //Oppgave 7a
     public static String flett (String s, String t) {
         //Splitter hvertbokstav fra s og t til en array
