@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Oblig1 {
 
@@ -137,49 +139,85 @@ public class Oblig1 {
 
     //Oppgave 9
     public static int[] tredjeMin ( int [] a){
+
         int n = a.length;     // tabellens lengde
         if (n < 3) throw      // må ha minst tre verdier
-                new java.util.NoSuchElementException("a.length(" + n + ") < 2!");
+                new java.util.NoSuchElementException("a.length(" + n + ") < 3!");
 
-        //Tabell som tar inn tre første verdiene fra tabell a ved hjelp av en for-løkke
+
+        //En array som får tre første verdiene
         int[] treForsteVerdier = new int[3];
-        for (int i=0; i<3; i++){
-            treForsteVerdier[i] = a[i];
-        }
 
-        int m = 0;      // m er posisjonen til minste verdi
-        int nm = 1;     // nm er posisjonen til nest minste verdi
-        int nnm = 2;    // nnm er posisjonen til nest nest minste verdi
+
+        int[] indeksStigende = indekssortering(a);
+
+        int m = indeksStigende[0];      // m er posisjonen til minste verdi
+        int nm = indeksStigende[1];     // nm er posisjonen til nest minste verdi
+        int nnm = indeksStigende[3];    // nnm er posisjonen til nest nest minste verdi
 
         // bytter om m og nm hvis a[1] er større enn a[0]
-        if (a[2] < a[1]) { nnm = 1; nm = 0; }
-
+        if(a[2] < a[1]) { nnm = 1; nm = 2; }
+        if(a[1] < a[0]) { nm =0; m=1; }
 
         int minstverdi = a[m];                // minste verdi
         int nestminstverdi = a[nm];           // nest minste verdi
         int nestnestminstverdi = a[nnm];      // nest nest minste verdi
 
-        for (int i = 3; i < n; i++)
-        {
-            if (a[i] > nestminstverdi)
-            {
-                if (a[i] > minstverdi)
-                {
-                    nm = m;
-                    nestminstverdi = minstverdi;     // ny nest størst
+        for (int i = 3; i < n; i++){
 
-                    m = i;
-                    minstverdi = a[m];              // ny størst
-                }
-                else
-                {
-                    nm = i;
-                    nestminstverdi = a[nm];         // ny nest størst
+            if (a[i] < nestnestminstverdi){
+                nnm = nm;
+                nestnestminstverdi = nestminstverdi;
+                m=i;
+
+                nestminstverdi = a[nm];
+
+                if(a[i] < nestminstverdi){
+
+                    if (a[i] > minstverdi){
+                        nm = m;
+                        nestminstverdi = minstverdi;     // ny nest størst
+
+                        m = i;
+                        minstverdi = a[m];              // ny størst
+                    } else {
+                        nm = i;
+                        nestminstverdi = a[nm];         // ny nest størst
+                    }
                 }
             }
         } // for
 
-        return new int[] {m,nm};    // n i posisjon 0, nm i posisjon 1
+        return new int[] {m,nm, nnm};    // n i posisjon 0, nm i posisjon 1
+    }
+
+
+
+    //Oppgave 10
+    public static boolean inneholdt (String a, String b) {
+        String[] aSplit = a.split("");
+        String[] bSplit = b.split("");
+
+        //Finner arrayen som har størst lengde av sSplit og tSplit
+        int lengde=0;
+        if(bSplit.length>aSplit.length){
+            lengde = bSplit.length;
+        } else {
+            lengde = aSplit.length;
+        }
+
+
+        List<String> antallLik = new ArrayList<String>();
+        for(int i=0; i<lengde; i++){
+            int antall=1;
+            for (int j=1; j<lengde; j++) {
+                if (aSplit[i] == aSplit[j]) {
+                    antall++;
+                    
+                }
+            }
+        }
+
     }
 
 
@@ -191,7 +229,7 @@ public class Oblig1 {
         System. out .println(a + " " + b + " " + c);*/
 
         int [] a = {16,6,12,11,7,12,3,9,8,5};
-        tredjeMin(a);
+        System.out.print(Arrays.toString(tredjeMin(a)));
 
 
         //int [] indeks = indekssortering (a);
