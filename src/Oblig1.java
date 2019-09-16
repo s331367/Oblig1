@@ -32,7 +32,32 @@ public class Oblig1 {
         return ut; //Skriver ut resultatet
     }
 
+    //Oppgave 7b
 
+    public static String flett (String... s){
+
+        String ut="";
+        for(int i=0; i<s.length; i++){
+            int j=0;
+            while(j < s.length) {
+                String tekst = s[j];
+                String[] sSplit = tekst.split("");
+
+                if (i > sSplit.length-1) {
+                    j++;
+                } else {
+                    ut += sSplit[i];
+                    j++;
+                }
+            }
+            j=0;
+        }
+
+        return ut;
+    }
+
+
+    //Oppgave 8
     public static int [] indekssortering ( int [] a){
         int[] aStigende = a.clone();
         int[] indeksStigende = new int [a.length];
@@ -67,7 +92,8 @@ public class Oblig1 {
         System. out .println(a + " " + b + " " + c);*/
 
         int [] a = {6,10,16,11,7,12,3,9,8,5};
-        System.out.print(Arrays.toString(indekssortering(a)));
+        int [] indeks = indekssortering (a);
+        for ( int i = 0; i < a. length ; i++) System. out .print(a[indeks[i]] + " " );
 
         // Utskrift: [6, 10, 16, 11, 7, 12, 3, 9, 8, 5] a er ikke endret
         // Utskrift: [6, 9, 0, 4, 8, 7, 1, 3, 5, 2]
