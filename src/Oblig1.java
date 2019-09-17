@@ -61,10 +61,16 @@ public class Oblig1 {
 
     //Oppgave 2
     public static int antallUlikeSortert(int[] a){
-        if(a.length < 0){ //Sjekker om arrayen er tom
+        if(a.length == 0){ //Sjekker om arrayen er tom
             return 0;
         }
-        if(!gyldigArray(a)) throw new IllegalStateException("Ikke sortert array");
+        if(a.length==1){
+            return 1;
+        }
+        for(int i = 0; i<a.length-1; i++){
+            if(a[i]>a[i+1]) throw new IllegalStateException("usortert tabell");
+        }
+
         int temp = 0;//hjelpevariabel for å sammenligne med a[i], og om de er ulike eller ikke
         int antall = 0;//hjelpevarbel som teller antall ulike verdier
         for(int i = 0; i<a.length; i++){
@@ -76,17 +82,13 @@ public class Oblig1 {
         return antall;//returner antall forskjellige verdier til slutt
     }
 
-    public static boolean gyldigArray(int[] a){//Sjekker om arrayen er sortert
-        for(int i = 0; i<a.length; i++){
-            if(a[i-1]>a[i]) return false;
-        }
-        return true;
-    }
-
     //Oppgave 3
     public static int antallUlikeUsortert ( int [] a){
-        if(a.length < 0){
+        if(a.length == 0){
             return 0;
+        }
+        if(a.length == 0){
+            return 1;
         }
         int antall = 0;
         for(int i = 0; i<a.length; i++){//første verdien
@@ -96,8 +98,9 @@ public class Oblig1 {
                     antall++;//hvis ja, legges det til inn på antall
                 }
             }
+            antall++;
         }
-        return (a.length+1)-antall;//Trekker duplikater fra antall verdier
+        return antall;//Trekker duplikater fra antall verdier
     }
 
     //Oppgave 4
