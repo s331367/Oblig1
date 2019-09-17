@@ -82,12 +82,6 @@ public class Oblig1 {
 
     //Oppgave 3
     public static int antallUlikeUsortert ( int [] a){
-        if(a.length == 0){
-            return 0;
-        }
-        if(a.length == 0){
-            return 1;
-        }
 
         //Hjelpetabell som tar imot elementene fra tabell a, men alle verdiene i denne skal være unik fra hverandre
         List<Integer> liste = new ArrayList<Integer>();
@@ -160,6 +154,55 @@ public class Oblig1 {
             System.out.print(k +" ");
         }
     }
+    //Oppgave 5
+    public static void rotasjon(char[] a){//roterer en verdi til høyre, og siste verdi til starten av arrayet
+        if(a.length > 0){
+            char temp = a[a.length-1];//tilordner siste verdien til temp
+            for (int i = a.length-1; i>0; i--){
+                a[i]=a[i-1];//flytter en og en verdi til høyre
+            }
+            a[0]=temp;//tilorden første verdien den siste
+        }else {
+            return;
+        }
+    }
+
+    //oppgave 6
+    public static void rotasjon(char[] a, int k){
+
+        if(a.length == 1 || a.length == 0){
+            return;
+        }
+
+        char[] b = new char[a.length];
+
+        if(k>0){
+            int temp = 0;
+            for (int i = 0; i<a.length - k; i++){
+                b[i+k]=a[i];
+            }
+            for (int i = a.length-k; i<a.length; i++){
+                b[temp]=a[i];
+                temp++;
+            }
+        }
+        if(k<0){
+            k = Math.abs(k);
+            int temp = a.length-1;
+            for(int i = k-1; i>=0; i--){
+                b[temp] = a[i];
+                temp--;
+            }
+            for(int i = a.length-1; i>=k; i--){
+                b[i-k]=a[i];
+            }
+        }
+
+        for(int i = 0; i<a.length; i++){
+            a[i]=b[i];
+        }
+    }
+
 
     //Oppgave 7a
     public static String flett (String s, String t) {
