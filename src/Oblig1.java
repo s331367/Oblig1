@@ -1,9 +1,7 @@
 // Dusanth Selvarajah - S331367
 // Rizwan Mahmoood - S331409
 
-import java.util.Arrays;
-import java.util.NoSuchElementException;
-import java.util.Random;
+import java.util.*;
 
 public class Oblig1 {
 
@@ -90,17 +88,28 @@ public class Oblig1 {
         if(a.length == 0){
             return 1;
         }
-        int antall = 0;
-        for(int i = 0; i<a.length; i++){//første verdien
-            for(int j = i+1; j<a.length; j++){
-                if(a[i]==a[j]){//sammenligner de resterende verdiene
-                    //med første verdien, om det finnes duplikater
-                    antall++;//hvis ja, legges det til inn på antall
-                }
+
+        //Hjelpetabell som tar imot elementene fra tabell a, men alle verdiene i denne skal være unik fra hverandre
+        List<Integer> liste = new ArrayList<Integer>();
+
+        //For-løkke som suser gjennom en og en element i tabellen a
+        for(int i=0; i<a.length; i++) {
+            //If-setning som sjekker om hvis arraylisten er tom, så legges det a[i](samsvarer a[0]) i hjelpetabellen
+            //Men hvis hjelpetabellen har en/fler elementer så sjekkes den om a[i] lik med noen av elementene i
+            //hjelpetabellen, dersom ikke så legges det elementet i hjelpetabellen
+            if (liste.size() == 0) {
+                liste.add(a[i]);
+            } else {
+                for (int j = 0; j < liste.size(); j++)
+                    if (liste.contains(a[i])) {
+                        j = liste.size() - 1;
+                    } else {
+                        liste.add(a[i]);
+                    }
             }
-            antall++;
         }
-        return antall;//Trekker duplikater fra antall verdier
+
+        return liste.size(); //Skriver ut antall ulike elementer i tabellen a, som ligger i hjelpetabellen
     }
 
     //Oppgave 4
@@ -307,9 +316,11 @@ public class Oblig1 {
         //int [] a = {16,6,12,11,7,12,3,9,8,5};
         //tredjeMin(a);
 
-        String a = flett ("AM ", "L", "GEDS", "ORATKRR", "", "R TRTE", "IO", "TGAUU");
-        System. out .println(a);
+        //String a = flett ("AM ", "L", "GEDS", "ORATKRR", "", "R TRTE", "IO", "TGAUU");
+        //System. out .println(a);
 
+        int[] f = {1, 2, 2, 2, 2, 2, 3};
+        System.out.print(antallUlikeUsortert(f));
 
         //int [] indeks = indekssortering (a);
 

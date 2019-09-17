@@ -23,7 +23,7 @@ import java.util.*;
  */
 public class Oblig1Test {
 
-   /* ///// Oppgave 1 //////////////////////////////////////
+    ///// Oppgave 1 //////////////////////////////////////
     @org.junit.jupiter.api.Test
     void oppgave1() {
         int antallFeil = 0;
@@ -75,7 +75,7 @@ public class Oblig1Test {
             antallFeil++;
         }
         assertEquals(0, antallFeil, "Du har for mange feil i oppgave 1");
-    }*/
+    }
 
 
     ///// Oppgave 2 /////////////////////////////////////
@@ -172,8 +172,7 @@ public class Oblig1Test {
         assertEquals(0, antallFeil, "Du har for mange feil i oppgave 3");
     }
 
-
-/*
+    /*
     ///// Oppgave 4 //////////////////////////////////////
     @org.junit.jupiter.api.Test
     void oppgave4() {
