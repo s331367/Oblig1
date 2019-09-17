@@ -1,8 +1,63 @@
+// Dusanth Selvarajah - S331367
+// Rizwan Mahmoood - S331409
+
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Random;
 
 public class Oblig1 {
+
+    //Oppgave 1
+    public static int maks(int[] a) {
+        if (a.length == 0) {
+            throw new NoSuchElementException("Tom Array");
+        }
+
+        int storst = a[0];
+
+        for(int i=0; i<a.length; i++) {
+
+            for(int j=1; j<a.length; j++) {
+
+                if (a[i] > a[j]) {
+                    storst = a[i];
+                    a[i] = a[j];
+                    a[j] = storst;
+                } else {
+                    storst = a[j];
+                }
+                i++;
+            }
+        }
+
+        return storst;
+    }
+
+    public static int ombyttinger(int[] a) {
+        if (a.length == 0) {
+            throw new NoSuchElementException("Tom Array");
+        }
+
+        int antall = 0; //Teller antall Ombyttinger
+        int storst = a[0];
+        for(int i=0; i<a.length; i++) {
+
+            for(int j=1; j<a.length; j++) {
+
+                if (a[i] > a[j]) {
+                    storst = a[i];
+                    a[i] = a[j];
+                    a[j] = storst;
+                    antall++;
+                } else {
+                    storst = a[j];
+                }
+                i++;
+            }
+        }
+
+        return antall;
+    }
 
     //Oppgave 2
     public static int antallUlikeSortert(int[] a){
@@ -20,6 +75,7 @@ public class Oblig1 {
         }
         return antall;//returner antall forskjellige verdier til slutt
     }
+
     public static boolean gyldigArray(int[] a){//Sjekker om arrayen er sortert
         for(int i = 0; i<a.length; i++){
             if(a[i-1]>a[i]) return false;
@@ -28,7 +84,7 @@ public class Oblig1 {
     }
 
     //Oppgave 3
-    public static int antallUlikeSortertV2(int[] a){
+    public static int antallUlikeUsortert ( int [] a){
         if(a.length < 0){
             return 0;
         }
@@ -124,7 +180,6 @@ public class Oblig1 {
     }
 
     //Oppgave 7b
-
     public static String flett (String... s){
 
         String ut="";
@@ -156,11 +211,11 @@ public class Oblig1 {
 
         for(int i=0; i<aStigende.length; i++){
             for(int j=0; j<aStigende.length-1; j++){
-                    if (aStigende[j + 1] < aStigende[j]) {
-                        tmp = aStigende[j + 1];
-                        aStigende[j + 1] = aStigende[j];
-                        aStigende[j] = tmp;
-                    }
+                if (aStigende[j + 1] < aStigende[j]) {
+                    tmp = aStigende[j + 1];
+                    aStigende[j + 1] = aStigende[j];
+                    aStigende[j] = tmp;
+                }
             }
         }
 
@@ -175,6 +230,7 @@ public class Oblig1 {
 
         return indeksStigende;
     }
+
 
 
     //Oppgave 9
@@ -232,8 +288,11 @@ public class Oblig1 {
         String c = flett ( "" , "AB" );
         System. out .println(a + " " + b + " " + c);*/
 
-        int [] a = {16,6,12,11,7,12,3,9,8,5};
-        tredjeMin(a);
+        //int [] a = {16,6,12,11,7,12,3,9,8,5};
+        //tredjeMin(a);
+
+        String a = flett ( "AFK", "BGLP", "CHMQT", "DINRUW", "EJOSVXY" );
+        System. out .println(a);
 
 
         //int [] indeks = indekssortering (a);
