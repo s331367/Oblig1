@@ -22,7 +22,7 @@ import java.util.*;
  * Du skal ikke endre noe som helst i denne filen
  */
 public class Oblig1Test {
-
+    /*
     ///// Oppgave 1 //////////////////////////////////////
     @org.junit.jupiter.api.Test
     void oppgave1() {
@@ -131,7 +131,7 @@ public class Oblig1Test {
     }
 
 
-    /*
+
     ///// Oppgave 3 //////////////////////////////////////
     @org.junit.jupiter.api.Test
     void oppgave3() {
@@ -171,6 +171,7 @@ public class Oblig1Test {
 
         assertEquals(0, antallFeil, "Du har for mange feil i oppgave 3");
     }
+    */
 
 
 
@@ -330,6 +331,7 @@ public class Oblig1Test {
 
         assertEquals(0, antallFeil, "Du har for mange feil i oppgave 4");
     }
+    /*
 
     ///// Oppgave 5 //////////////////////////////////////
     @org.junit.jupiter.api.Test
@@ -487,6 +489,7 @@ public class Oblig1Test {
         assertEquals(0, antallFeil, "Du har for mange feil i oppgave 6");
     }
 
+     */
 
 
 
@@ -564,7 +567,6 @@ public class Oblig1Test {
                     ("Oppgave 7a: i) Svaret skal bli lik ABCDEFGHIJKLMN");
             antallFeil++;
         }
-
         String[] a = {};
 
         try {
@@ -616,7 +618,7 @@ public class Oblig1Test {
         assertEquals(0, antallFeil, "Du har for mange feil i oppgave 7");
     }
 
-
+    /*
     ///// Oppgave 8 //////////////////////////////////////
     @org.junit.jupiter.api.Test
     void oppgave8() {
@@ -945,7 +947,8 @@ public class Oblig1Test {
         }
         assertEquals(0, antallFeil, "Du har for mange feil i oppgave 10");
     }
-    */
+
+     */
 
     ///// Hjelpemetoder /////////////////////////////
 

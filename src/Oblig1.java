@@ -179,11 +179,24 @@ public class Oblig1 {
         return ut; //Skriver ut resultatet
     }
 
-    //Oppgave 7b
     public static String flett (String... s){
+        int lengde=0;
+        if(s.length == 1){
+            return s[0];
+        } else if(s.length == 0){
+            return "";
+        } else {
+            lengde = s[0].length();
+            for(int i=1; i<s.length; i++){
+                if(s[i].length()>lengde){
+                    lengde = s[i].length();
+                }
+            }
+
+        }
 
         String ut="";
-        for(int i=0; i<s.length; i++){
+        for(int i=0; i<lengde; i++){
             int j=0;
             while(j < s.length) {
                 String tekst = s[j];
@@ -291,7 +304,7 @@ public class Oblig1 {
         //int [] a = {16,6,12,11,7,12,3,9,8,5};
         //tredjeMin(a);
 
-        String a = flett ( "AFK", "BGLP", "CHMQT", "DINRUW", "EJOSVXY" );
+        String a = flett ("AM ", "L", "GEDS", "ORATKRR", "", "R TRTE", "IO", "TGAUU");
         System. out .println(a);
 
 
