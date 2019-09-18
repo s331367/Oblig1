@@ -1,6 +1,8 @@
 // Dusanth Selvarajah - S331367
 // Rizwan Mahmoood - S331409
 
+import sun.awt.image.ImageWatched;
+
 import java.util.*;
 
 public class Oblig1 {
@@ -168,40 +170,50 @@ public class Oblig1 {
     }
 
     //oppgave 6
-    public static void rotasjon(char[] a, int k){
+    public static void rotasjon (char [] a, int k) {
 
-        if(a.length == 1 || a.length == 0){
-            return;
+        int antallTrinn = gcd(k,a.length);
+
+        //Hvis array tom, ingen rotasjoner
+        if (a.length == 0) { return; }
+
+        if(antallTrinn<0){
+            antallTrinn = antallTrinn + a.length;
+        } else
+
+
+        for(int j=0; j<antallTrinn; j++){
+                char tmpSlutt = a[a.length - 1];
+                char tmpStart = a[0];
+                a[0] = tmpSlutt;
+                for (int i = 1; i < a.length; i++) {
+                    tmpSlutt = a[i];
+                    a[i] = tmpStart;
+                    tmpStart = tmpSlutt;
+                }
         }
 
-        char[] b = new char[a.length];
+        /*else {
+            for(int j=0; j>antallTrinn; j--){
+                char tmpStart = a[0];
+                char tmpSlutt = a[a.length-1];
+                a[a.length-1] = tmpStart;
 
-        if(k>0){
-            int temp = 0;
-            for (int i = 0; i<a.length - k; i++){
-                b[i+k]=a[i];
+                for(int i=a.length-2; i<a.length; i--){
+                    if(i==-1){
+                        break;
+                    } else {
+                        tmpStart = a[i];
+                        a[i] = tmpSlutt;
+                        tmpSlutt = tmpStart;
+                    }
+                }
             }
-            for (int i = a.length-k; i<a.length; i++){
-                b[temp]=a[i];
-                temp++;
-            }
-        }
-        if(k<0){
-            k = Math.abs(k);
-            int temp = a.length-1;
-            for(int i = k-1; i>=0; i--){
-                b[temp] = a[i];
-                temp--;
-            }
-            for(int i = a.length-1; i>=k; i--){
-                b[i-k]=a[i];
-            }
+
+         */
         }
 
-        for(int i = 0; i<a.length; i++){
-            a[i]=b[i];
-        }
-    }
+
 
 
     //Oppgave 7a
@@ -302,52 +314,165 @@ public class Oblig1 {
 
 
     //Oppgave 9
-    public static int[] tredjeMin ( int [] a){
-        int n = a.length;     // tabellens lengde
-        if (n < 3) throw      // må ha minst tre verdier
-                new java.util.NoSuchElementException("a.length(" + n + ") < 2!");
+    public static int[] tredjeMin(int [] a){
+        int lengde = a.length;     // tabellens lengde
 
-        //Tabell som tar inn tre første verdiene fra tabell a ved hjelp av en for-løkke
+        // If-setning som sjekker om det er flere elementer enn 3
+        if (lengde < 3) {
+            throw new java.util.NoSuchElementException("Tabellen må har minimum 3 verdier");
+        }
+
+        //Hjelpetabell som tar inn tre første verdiene fra tabell a ved hjelp av en for-løkke
         int[] treForsteVerdier = new int[3];
         for (int i=0; i<3; i++){
             treForsteVerdier[i] = a[i];
         }
 
-        int m = 0;      // m er posisjonen til minste verdi
-        int nm = 1;     // nm er posisjonen til nest minste verdi
-        int nnm = 2;    // nnm er posisjonen til nest nest minste verdi
+        //Sorterer tabellen treForsteVerdier, for å finne ut det minste av de tre
+        int[] indeks = indekssortering(treForsteVerdier);
 
-        // bytter om m og nm hvis a[1] er større enn a[0]
-        if (a[2] < a[1]) { nnm = 1; nm = 0; }
+        int m = treForsteVerdier[indeks[0]];      // m er posisjonen til minste verdi
+        int nm = treForsteVerdier[indeks[1]];     // nm er posisjonen til nest minste verdi
+        int nnm = treForsteVerdier[indeks[2]];    // nnm er posisjonen til nest nest minste verdi
 
+        int tmp;
+        for (int i = 3; i < a.length; i++) {
+            if (a[i] < nnm){
+                tmp = nnm;
+                nnm = a[i];
 
-        int minstverdi = a[m];                // minste verdi
-        int nestminstverdi = a[nm];           // nest minste verdi
-        int nestnestminstverdi = a[nnm];      // nest nest minste verdi
+                if (a[i] < nm){
+                    nnm = nm;
+                    nm = a[i];
 
-        for (int i = 3; i < n; i++)
-        {
-            if (a[i] > nestminstverdi)
-            {
-                if (a[i] > minstverdi)
-                {
-                    nm = m;
-                    nestminstverdi = minstverdi;     // ny nest størst
-
-                    m = i;
-                    minstverdi = a[m];              // ny størst
-                }
-                else
-                {
-                    nm = i;
-                    nestminstverdi = a[nm];         // ny nest størst
+                    if(a[i] < m){
+                        nm = m;
+                        m = a[i];
+                    }
                 }
             }
-        } // for
+        }
 
-        return new int[] {m,nm};    // n i posisjon 0, nm i posisjon 1
+        int indeksM = 0;            // indeksen til minste verdi
+        int indeksNM = 0;           // indeksen til nest minste verdi
+        int indeksNNM = 0;          // indeksen til nest nest minste verdi
+
+        for(int i=0; i<a.length; i++){
+            if(a[i] == m){
+                indeksM = i;
+            } else if(a[i] == nm){
+                indeksNM = i;
+            } else if(a[i] == nnm){
+                indeksNNM = i;
+            }
+        }
+
+
+        return new int[] {indeksM,indeksNM,indeksNNM};    // n i posisjon 0, nm i posisjon 1, nnm i posisjon 3
     }
 
+    //Oppgave 10
+    public static boolean inneholdt (String a, String b) {
+
+        //Deler opp hvert bokstav i String a og String b. Bokstavene satt i en annen array. a til aSplit og b til bSplit.
+        char[] aSplit = a.toCharArray();
+        char[] bSplit = b.toCharArray();
+
+        kvikkSortChar(aSplit, 0, aSplit.length-1);
+        kvikkSortChar(bSplit, 0, bSplit.length-1);
+
+        return inklusjon(aSplit, bSplit, aSplit.length, bSplit.length);
+
+    }
+
+
+
+
+
+    //Hjelpemetoder for oppgave 10 - Metoder er fra kompandiet
+    public static boolean inklusjon(char[] a, char[] b, int aLengde, int bLengde) {
+        // Vi har ikke noe arbeid å gjore, saa vi returnerer
+        if (a.length == 0 || (a.length ==0 & b.length == 0)) {
+            return true;
+        } else if(b.length==0){
+            return false;
+        }
+
+        int i = 0, j = 0;
+        int ekstra=0;
+
+        //Løkke som kjøres så lenge i er mindre enn aLengde og j er mindre enn bLengde
+        while (i < aLengde && j < bLengde) {
+            if (a[i] < b[j]){ //Elementet i a[i](altså bokstavet) er mindre enn elementet i b[j], så økes i med 1
+                i++;
+            } else if (a[i] == b[j]) { //Hvis elementene(altså bokstavene) i a[i] er lik med b[j] så økes i og j med 1
+                i++;
+                j++;
+            } else { //Hvis a[i] ikke er et element i b[j] så retuneres det false;
+                j++;
+                ekstra++;
+            }
+        }
+        if(j-ekstra == i) {
+            if(a.length == b.length && ekstra != 0) {
+                return false;
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public static void kvikkSortChar(char[] a, int fra, int til) {
+        // Vi har ikke noe arbeid å gjore, saa vi returnerer
+        if (fra >= til) {
+            return;
+        }
+
+        int midtpunktVerdi = a[fra + (til - fra) / 2]; // Finner verdien til midtpunktet
+
+        int i = fra;
+        int j = til;
+
+        // itererer
+        while (i <= j) {
+            while (a[i] < midtpunktVerdi) {
+                i++; //Øker med 1 hvis verdien i a[i] er mindre en midtpunktverdien
+            }
+
+            while (a[j] > midtpunktVerdi) {
+                j--; //Minker med 1 hvis verdien i a[j] er mindre en midtpunktverdien
+            }
+
+            if (i <= j) {
+                char temp = a[i];
+                a[i] = a[j];
+                a[j] = temp;
+                i++;
+                j--;
+            }
+        }
+
+        kvikkSortChar(a, fra, j); // Sorterer arrayen før og med midpunktsverdien
+        kvikkSortChar(a,i,til );  // Sorterer arrayen etter og med midpunktsverdien
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //Hjelpemetoder
+    public static int gcd(int a, int b) {
+        if (a == 0) { return b;}
+        return gcd(b%a,a);
+    }
 
 
     public static void main(String[] args){
@@ -362,8 +487,21 @@ public class Oblig1 {
         //String a = flett ("AM ", "L", "GEDS", "ORATKRR", "", "R TRTE", "IO", "TGAUU");
         //System. out .println(a);
 
-        int[] f = {1, 2, 2, 2, 2, 2, 3};
-        System.out.print(antallUlikeUsortert(f));
+        //char[] x = new char[100_000];
+        //System. out .println(Arrays. toString (a));
+
+        //char [] a = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
+        //System. out .println(Arrays.toString (a));
+        //rotasjon (a,4); System. out .println(Arrays.toString (a));
+        //rotasjon (a,-2); System. out .println(Arrays.toString (a));
+        //System.out.println(gcd(100000,199999));
+
+        int[] tabell = new int[]{2,5,3,4,8};
+        System.out.println(Arrays.toString(tredjeMin(tabell)));
+
+
+
+        //System.out.println(inneholdt ("ABBAB", "ABBAB"));
 
         //int [] indeks = indekssortering (a);
 
