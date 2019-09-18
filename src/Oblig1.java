@@ -110,111 +110,124 @@ public class Oblig1 {
 
     //Oppgave 4
     public static void delsortering ( int[] a) {
-        int j=0;
-        for(int i=0; i<a.length; i++) {
-            int tmp = a[j];
-            if(a[i] % 2 == 0){
-
-            } else {
-                a[j] = a[i];
-                a[i] = tmp;
-                j++;
-
-            }
-        }
-
-        int storstOdd = a[0];
-        for(int i=0; i<j-1; i++) {
-            for(int k=1; k<j; k++) {
-                if (a[i] > a[k]) {
-                    storstOdd = a[i];
-                    a[i] = a[k];
-                    a[k] = storstOdd;
-                } else {
-                    storstOdd = a[k];
-                }
-                i++;
-            }
-        }
-
-        int storstPartall = a[j];
-        for(int i=j; i<a.length-1; i++) {
-            for(int k=j+1; k<a.length; k++) {
-                if (a[i] > a[k]) {
-                    storstPartall = a[i];
-                    a[i] = a[k];
-                    a[k] = storstPartall;
-                } else {
-                    storstPartall = a[k];
-                }
-                i++;
-            }
-        }
-        System.out.println(j);
-
-        for(int k : a) {
-            System.out.print(k +" ");
-        }
-    }
-    //Oppgave 5
-    public static void rotasjon(char[] a){//roterer en verdi til høyre, og siste verdi til starten av arrayet
-        if(a.length > 0){
-            char temp = a[a.length-1];//tilordner siste verdien til temp
-            for (int i = a.length-1; i>0; i--){
-                a[i]=a[i-1];//flytter en og en verdi til høyre
-            }
-            a[0]=temp;//tilorden første verdien den siste
-        }else {
+        if(a.length == 0 || a.length == 1){
             return;
         }
-    }
 
-    //oppgave 6
-    public static void rotasjon (char [] a, int k) {
+        int venstre = 0;
+        int hoyre = a.length -1;
 
-        int antallTrinn = gcd(k,a.length);
-
-        //Hvis array tom, ingen rotasjoner
-        if (a.length == 0) { return; }
-
-        if(antallTrinn<0){
-            antallTrinn = antallTrinn + a.length;
-        } else
+        //Finner antall oddetall og partall
+        int oddeTall = 0;
+        int parTall = 0;
 
 
-        for(int j=0; j<antallTrinn; j++){
-                char tmpSlutt = a[a.length - 1];
-                char tmpStart = a[0];
-                a[0] = tmpSlutt;
-                for (int i = 1; i < a.length; i++) {
-                    tmpSlutt = a[i];
-                    a[i] = tmpStart;
-                    tmpStart = tmpSlutt;
-                }
+        for(int i = 0; i<a.length; i++){
+            if((a[i]&1)==1){
+                oddeTall++;
+            }else{
+                parTall++;
+            }
         }
 
-        /*else {
-            for(int j=0; j>antallTrinn; j--){
-                char tmpStart = a[0];
-                char tmpSlutt = a[a.length-1];
-                a[a.length-1] = tmpStart;
+        //hvis det er kun partall eller oddetall, trenger vi ikke aa lete etter index
+        //til skilleverdien
+        if(parTall == 0 || oddeTall == 0){
+            kvikksortering0(a,0,a.length-1);//sorterer hele tabellen
+        }
 
-                for(int i=a.length-2; i<a.length; i--){
-                    if(i==-1){
-                        break;
-                    } else {
-                        tmpStart = a[i];
-                        a[i] = tmpSlutt;
-                        tmpSlutt = tmpStart;
-                    }
-                }
+        //Soker fra begge sider, oddetall skyves bort til venstre, mens partall tl høyre
+        while (venstre<hoyre){
+            while((a[venstre]&1)==1 && venstre < hoyre){
+                venstre++;
+            }while((a[hoyre]&1)==0 && venstre < hoyre){
+                hoyre--;
+            }
+            if(venstre<hoyre){
+                int temp = a[venstre];
+                a[venstre] = a[hoyre];
+                a[hoyre] = temp;
+                venstre++;
+                hoyre--;
+            }
+        }
+        //bruker kvikksorteringsmetoden til å sortere oddetall og partall i stigende rekkefolge
+        kvikksortering(a,0,oddeTall);
+        kvikksortering(a,oddeTall,a.length);
+    }
+    //hjelpemetoder fra læreboka som kvikksorterer
+    public static int partisjon(int[] a, int v, int h, int skilleverdi){
+        while(v <= h && a[v]<skilleverdi){
+            v++;// v kan ikke stige h
+        }
+        while(v<=h && a[h]>=skilleverdi){
+            h--;//h kan ikke gå forbi v
+        }
+        while(true){
+
+            if(v<h){
+                bytt(a,v++,h--); //bytter om a[v] og a[h]
+            }else{
+                return v; // a[v] er nåden førstet som ikke er mindre enn skilleverdi
+            }
+            while (a[v] < skilleverdi){
+                v++;
+            }
+            while (a[h]>=skilleverdi){
+                h--;
             }
 
-         */
+        }
+    }
+
+    public static int sPartisjon(int[] a, int v, int h, int indeks){
+        bytt(a,indeks,h);               //skilleverdi a[indeks] flyttes bakerst
+        int pos = partisjon(a,v,h-1,a[h]);  //partisjonerer a[v:h-1]
+        bytt(a, pos, h);                //bytter for å få skileverdien på rett plass
+        return pos;                     //returnerer posisjonen til skilleverdien
+    }
+
+    private static void kvikksortering0(int[] a, int v, int h){
+        if(v >= h) return; //a[v:h] er tomt eller har maks ett element
+        int k = sPartisjon(a,v,h,(v+h)/2); //bruker midtverdien
+        kvikksortering0(a,v,k-1);       //sorterer intervallet a[v:k-1]
+        kvikksortering0(a,k+1,h);       //sorterer intervallet a[k+1:h]
+    }
+    public static void kvikksortering(int[] a, int fra, int til){//a[fra:til>
+        kvikksortering0(a,fra,til-1);
+    }
+    public static void bytt(int[] c, int i, int j){
+        int temp = c[i]; c[i] = c[j]; c[j] = temp;
+    }
+
+
+
+    //oppgave 6
+    public static void rotasjon(char[] a, int k){
+
+        if(a.length == 1 || a.length == 0){
+            return; //skjer ingen rotasjon hvis tabellen har et element
+            // eller er tom
         }
 
+        int n = a.length;
+        if((k%=n)<0) k+= n;     //motsatt vei hvis k r negativ
+        //Bruker euklids algoritme for da slipper vi å tenke på sykler, altså
+        //en hel 360 rotasjon
+        //hvis vi har en tabell på 10 elementer og den skal roteres 16 ganger
+        //trenger vi bare å rotere den 6 ganger for etter de første 10 gangene,
+        //kommer verdiene tilbake til deres startverdier
+        int s = gcd(n,k);
 
-
+        for(int z = 0; z<s; z++){
+            char verdi = a[z];
+            for(int i = z-k, j=z; i!=z; i-=k){
+                if(i<0) i+= n;
+                a[j]=a[i]; j = i;
+            }
+            a[z+k]=verdi;
+        }
+    }
 
     //Oppgave 7a
     public static String flett (String s, String t) {
